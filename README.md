@@ -153,7 +153,7 @@ loans
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/lendify.git
+   git clone https://github.com/mohan13krishna/lendify.git
    cd lendify
    ```
 
