@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lendify</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold fs-4 text-primary" href="index.html">Lendify</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link mx-2 active"
+                aria-current="page"
+                href="index.html"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2" href="#services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2" href="login.html">Login</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="btn btn-primary rounded-pill px-4 ms-3"
+                href="register.html"
+                >Register</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section
+      class="hero-section d-flex align-items-center text-white text-center"
+    >
+      <div class="container">
+        <h1 class="display-3 fw-bold mb-4">
+          Streamline Your Loan Management Process
+        </h1>
+        <p class="lead mb-5">
+          Empower your financial institution with our comprehensive loan
+          management platform. From application to approval, manage every aspect
+          of your lending process with confidence and efficiency.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+          <a
+            href="register.html"
+            class="btn btn-primary btn-lg rounded-pill px-5 py-3"
+            >Get Started Today</a
+          >
+          <a
+            href="#features"
+            class="btn btn-outline-light btn-lg rounded-pill px-5 py-3"
+            >Learn More</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features-section py-5">
+      <div class="container text-center">
+        <h2 class="display-5 fw-bold mb-3">
+          Powerful Features for Modern Lending
+        </h2>
+        <p class="lead mb-5 text-muted">
+          Our platform provides everything you need to manage loans efficiently
+          and securely.
+        </p>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+          <div class="col">
+            <div class="feature-card card h-100 shadow-sm p-4 text-center">
+              <i class="fas fa-lock fa-3x text-primary mb-3"></i>
+              <h4 class="fw-bold">Secure Processing</h4>
+              <p class="text-muted">
+                Bank-grade security with end-to-end encryption to protect
+                sensitive financial data and ensure compliance.
+              </p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="feature-card card h-100 shadow-sm p-4 text-center">
+              <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+              <h4 class="fw-bold">Real-time Dashboard</h4>
+              <p class="text-muted">
+                Monitor loan applications, approvals, and portfolio performance
+                with comprehensive analytics and insights.
+              </p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="feature-card card h-100 shadow-sm p-4 text-center">
+              <i class="fas fa-cogs fa-3x text-primary mb-3"></i>
+              <h4 class="fw-bold">Automated Workflows</h4>
+              <p class="text-muted">
+                Streamline approval processes with intelligent automation and
+                customizable workflow rules.
+              </p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="feature-card card h-100 shadow-sm p-4 text-center">
+              <i class="fas fa-file-alt fa-3x text-primary mb-3"></i>
+              <h4 class="fw-bold">Advanced Reporting</h4>
+              <p class="text-muted">
+                Generate detailed reports and analytics to make data-driven
+                decisions and track performance metrics.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="why-choose-section py-5 bg-light">
+      <div class="container">
+        <h2 class="display-5 fw-bold text-center mb-5">Why Choose LoanPro?</h2>
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <img
+              src="assets/why-choose.jpg"
+              class="img-fluid rounded shadow-lg"
+              alt="Business meeting with analytics dashboard"
+            />
+          </div>
+          <div class="col-lg-6">
+            <ul class="list-unstyled">
+              <li class="d-flex align-items-start mb-4">
+                <i class="fas fa-check-circle text-success fa-2x me-3 mt-1"></i>
+                <div>
+                  <h5 class="fw-bold">Reduce Processing Time by 75%</h5>
+                  <p class="text-muted mb-0">
+                    Automated workflows and intelligent decision-making tools
+                    significantly speed up loan processing.
+                  </p>
+                </div>
+              </li>
+              <li class="d-flex align-items-start mb-4">
+                <i class="fas fa-check-circle text-success fa-2x me-3 mt-1"></i>
+                <div>
+                  <h5 class="fw-bold">Improve Customer Satisfaction</h5>
+                  <p class="text-muted mb-0">
+                    Provide transparent tracking and faster approvals to enhance
+                    customer experience.
+                  </p>
+                </div>
+              </li>
+              <li class="d-flex align-items-start mb-4">
+                <i class="fas fa-check-circle text-success fa-2x me-3 mt-1"></i>
+                <div>
+                  <h5 class="fw-bold">Ensure Regulatory Compliance</h5>
+                  <p class="text-muted mb-0">
+                    Built-in compliance features help you meet industry
+                    regulations and audit requirements.
+                  </p>
+                </div>
+              </li>
+              <li class="d-flex align-items-start mb-4">
+                <i class="fas fa-check-circle text-success fa-2x me-3 mt-1"></i>
+                <div>
+                  <h5 class="fw-bold">Scale Your Operations</h5>
+                  <p class="text-muted mb-0">
+                    Handle increased loan volumes without proportional increases
+                    in operational costs.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="services-section py-5">
+      <div class="container text-center">
+        <h2 class="display-5 fw-bold mb-3">Comprehensive Loan Services</h2>
+        <p class="lead mb-5 text-muted">
+          From personal loans to commercial lending, we support all types of
+          loan products.
+        </p>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="service-card card h-100 shadow-sm p-4 text-start">
+              <img
+                src="assets/home-loans.jpg"
+                class="card-img-top rounded mb-3"
+                alt="Home Loans"
+              />
+              <h4 class="fw-bold mb-2">Home Loans</h4>
+              <p class="card-text text-muted">
+                Streamline mortgage applications with automated property
+                valuation and credit assessment tools.
+              </p>
+              <a
+                href="#"
+                class="text-primary text-decoration-none fw-bold mt-auto"
+                >Learn More <i class="fas fa-arrow-right ms-2"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col">
+            <div class="service-card card h-100 shadow-sm p-4 text-start">
+              <img
+                src="assets/auto-loans.jpg"
+                class="card-img-top rounded mb-3"
+                alt="Auto Loans"
+              />
+              <h4 class="fw-bold mb-2">Auto Loans</h4>
+              <p class="card-text text-muted">
+                Fast-track vehicle financing with instant pre-approvals and
+                dealer integration capabilities.
+              </p>
+              <a
+                href="#"
+                class="text-primary text-decoration-none fw-bold mt-auto"
+                >Learn More <i class="fas fa-arrow-right ms-2"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col">
+            <div class="service-card card h-100 shadow-sm p-4 text-start">
+              <img
+                src="assets/business-loans.jpg"
+                class="card-img-top rounded mb-3"
+                alt="Business Loans"
+              />
+              <h4 class="fw-bold mb-2">Business Loans</h4>
+              <p class="card-text text-muted">
+                Support business growth with comprehensive commercial lending
+                solutions and risk assessment.
+              </p>
+              <a
+                href="#"
+                class="text-primary text-decoration-none fw-bold mt-auto"
+                >Learn More <i class="fas fa-arrow-right ms-2"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section bg-primary text-white py-5 text-center">
+      <div class="container">
+        <h2 class="display-5 fw-bold mb-3">
+          Ready to Transform Your Lending Process?
+        </h2>
+        <p class="lead mb-5">
+          Join thousands of financial institutions already using LoanPro to
+          streamline their operations and improve customer satisfaction.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+          <a
+            href="register.html"
+            class="btn btn-light btn-lg rounded-pill px-5 py-3"
+            >Start Free Trial</a
+          >
+          <a
+            href="#contact"
+            class="btn btn-outline-light btn-lg rounded-pill px-5 py-3"
+            >Schedule Demo</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-section py-5 bg-dark text-white">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="fw-bold mb-3 text-primary">Lendify</h5>
+            <p class="text-muted">
+              Empowering financial institutions with modern loan management
+              solutions.
+            </p>
+            <div class="social-icons mt-3">
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-linkedin fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-facebook-f fa-lg"></i
+              ></a>
+              <a href="#" class="text-white"
+                ><i class="fab fa-twitter fa-lg"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-md-2 mb-4">
+            <h5 class="fw-bold mb-3">Product</h5>
+            <ul class="list-unstyled text-muted">
+              <li>
+                <a href="#" class="text-decoration-none text-muted">Features</a>
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted">Pricing</a>
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted">Security</a>
+              </li>
+              <li><a href="#" class->Integrations</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2 mb-4">
+            <h5 class="fw-bold mb-3">Company</h5>
+            <ul class="list-unstyled text-muted">
+              <li>
+                <a href="#about" class="text-decoration-none text-muted"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted">Careers</a>
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted">Press</a>
+              </li>
+              <li>
+                <a href="#contact" class="text-decoration-none text-muted"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-2 mb-4">
+            <h5 class="fw-bold mb-3">Support</h5>
+            <ul class="list-unstyled text-muted">
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Help Center</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Documentation</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >API Reference</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted">Status</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-2 mb-4">
+            <h5 class="fw-bold mb-3">Legal</h5>
+            <ul class="list-unstyled text-muted">
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Terms of Service</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr class="border-secondary my-4" />
+        <div class="text-center text-muted">
+          <p>&copy; 2025 Lendify. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function navigateToSection(id) {
+        document.querySelector(`a[href="#${id}"]`).click();
+      }
+    </script>
+  </body>
+</html>
