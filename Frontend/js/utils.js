@@ -1,4 +1,4 @@
-const BASE_API_URL = 'http://localhost:5000/api';
+const BASE_API_URL = 'https://lendify-sxky.onrender.com/api';
 
 const getSessionData = (key) => {
     try {
