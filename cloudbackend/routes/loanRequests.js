@@ -130,7 +130,16 @@ loanRequestRouter.put('/:id/process', ensureAuthenticated, restrictToRoles('bank
         if (approved) {
             const { rows: bankerRecords } = await client.query('SELECT wallet_balance FROM users WHERE id = $1 FOR UPDATE', [processingBankerId]);
             const bankerUser = bankerRecords[0];
-            if (!bankerUser || bankerUser.wallet_balance < loanRequest.amount) {
+
+            // FIX: Explicitly parse wallet_balance and loanRequest.amount to floats for numerical comparison
+            const bankerWalletBalance = parseFloat(bankerUser.wallet_balance);
+            const requestedLoanAmount = parseFloat(loanRequest.amount);
+
+            // console.log('DEBUG: Banker ID:', processingBankerId); // Keep for debugging if needed
+            // console.log('DEBUG: Banker Wallet Balance (parsed):', bankerWalletBalance); // Keep for debugging if needed
+            // console.log('DEBUG: Loan Request Amount (parsed):', requestedLoanAmount); // Keep for debugging if needed
+
+            if (!bankerUser || bankerWalletBalance < requestedLoanAmount) { // Use parsed values here
                 await client.query('ROLLBACK'); // Rollback transaction
                 return response.status(400).json({ message: 'Banker does not have sufficient wallet funds to issue this loan' });
             }
@@ -142,24 +151,24 @@ loanRequestRouter.put('/:id/process', ensureAuthenticated, restrictToRoles('bank
                 return response.status(404).json({ message: 'Associated customer not found' });
             }
 
-            const calculatedMonthlyPayment = calculateLoanMonthlyPayment(loanRequest.amount, parseFloat(interestRate), loanRequest.term_months);
+            const calculatedMonthlyPayment = calculateLoanMonthlyPayment(requestedLoanAmount, parseFloat(interestRate), loanRequest.term_months); // Use parsed amount here
             const newLoanId = generateResourceId();
             const currentIssueDate = new Date().toISOString().split('T')[0];
             const firstDueDate = new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('T')[0];
 
             await client.query(
                 'INSERT INTO loans (id, customer_id, amount, interest_rate, term_months, monthly_payment, status, start_date, next_due_date, issued_by_banker_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-                [newLoanId, loanRequest.customer_id, loanRequest.amount, interestRate, loanRequest.term_months, calculatedMonthlyPayment, 'active', currentIssueDate, firstDueDate, processingBankerId]
+                [newLoanId, loanRequest.customer_id, requestedLoanAmount, interestRate, loanRequest.term_months, calculatedMonthlyPayment, 'active', currentIssueDate, firstDueDate, processingBankerId] // Use parsed amount
             );
 
             await client.query(
                 'UPDATE users SET wallet_balance = wallet_balance - $1 WHERE id = $2',
-                [loanRequest.amount, processingBankerId]
+                [requestedLoanAmount, processingBankerId] // Use parsed amount here
             );
 
             await client.query(
                 'UPDATE users SET account_balance = account_balance + $1 WHERE id = $2',
-                [loanRequest.amount, loanRequest.customer_id]
+                [requestedLoanAmount, loanRequest.customer_id] // Use parsed amount here
             );
 
             await client.query(
