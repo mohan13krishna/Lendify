@@ -53,29 +53,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // Modified to correctly handle content switching
     const updateVisibleDashboardContent = async (contentId) => {
-        // First, ensure all content sections are hidden
-        dashboardContentSections.forEach(content => {
-            content.classList.remove('active-content');
-        });
-
-        // Then, add 'active-content' to the targeted section
-        document.getElementById(contentId).classList.add('active-content');
-
-        // Now, perform data loading specific to the contentId
         switch (contentId) {
             case 'overview-content':
                 await refreshDashboardAnalytics();
-                // Removed redundant calls as these are now handled by their respective display functions
-                break;
-            case 'banker-approvals-content':
-                await displayBankerApprovals();
-                break;
-            case 'user-management-content':
+                await displayBankerApprovals(); // Also call these here as they are now part of overview
                 await displayAllSystemUsers();
+                await displayLoanAnalytics();
                 break;
+            case 'banker-approvals-content': // These will just show the overview content
+            case 'user-management-content':
             case 'loan-analytics-content':
+                await refreshDashboardAnalytics();
+                await displayBankerApprovals();
+                await displayAllSystemUsers();
                 await displayLoanAnalytics();
                 break;
         }
@@ -318,9 +309,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // Initial load of the dashboard overview and its components
     refreshDashboardAnalytics();
     displayBankerApprovals();
     displayAllSystemUsers();
-    displayLoanAnalytics(); // Ensure loan analytics are also loaded initially
 });
