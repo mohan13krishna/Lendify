@@ -1,4 +1,5 @@
-const BASE_API_URL = 'https://lendify-sxky.onrender.com/api';
+// Updated utils.js
+const BASE_API_URL = 'https://lendify-sxky.onrender.com/api'; // Consider making this configurable for different environments
 
 const getSessionData = (key) => {
     try {
@@ -57,6 +58,7 @@ const verifyAuthenticationAndRedirect = () => {
     return user;
 };
 
+// This function could be removed if calculation is solely backend driven
 const calculateLoanMonthlyPayment = (principalAmount, annualInterestRate, loanTermInMonths) => {
     const monthlyInterestRate = annualInterestRate / 12 / 100;
     if (monthlyInterestRate === 0) {
@@ -176,7 +178,6 @@ const apiFetchPendingLoanRequests = async () => {
     }
 };
 
-// NEW API FUNCTION FOR CUSTOMERS TO FETCH THEIR OWN PENDING REQUESTS
 const apiFetchCustomerPendingLoanRequests = async () => {
     try {
         const requests = await makeApiRequest('loan-requests/customer-pending');
@@ -196,9 +197,18 @@ const apiFetchAllLoanRequests = async () => {
     }
 };
 
-const apiProcessLoanApplication = async (requestId, approvedStatus, proposedInterestRate = null) => {
+// MODIFIED: Added processingBankerId to the data payload
+const apiProcessLoanApplication = async (requestId, approvedStatus, proposedInterestRate = null, processingBankerId) => {
     try {
-        const response = await makeApiRequest(`loan-requests/${requestId}/process`, 'PUT', { approved: approvedStatus, interestRate: proposedInterestRate });
+        const response = await makeApiRequest(
+            `loan-requests/${requestId}/process`,
+            'PUT',
+            {
+                approved: approvedStatus,
+                interestRate: proposedInterestRate,
+                processedByBankerId: processingBankerId // Pass banker ID in the body
+            }
+        );
         return { success: true, message: response.message };
     } catch (error) {
         return { success: false, message: error.message };
@@ -233,6 +243,7 @@ const apiFetchAllLoans = async () => {
     }
 };
 
+// Export all functions
 module.exports = {
     BASE_API_URL,
     getSessionData,
@@ -251,7 +262,7 @@ module.exports = {
     apiDeleteUserById,
     apiSubmitNewLoanRequest,
     apiFetchPendingLoanRequests,
-    apiFetchCustomerPendingLoanRequests, // ADDED THIS EXPORT
+    apiFetchCustomerPendingLoanRequests,
     apiFetchAllLoanRequests,
     apiProcessLoanApplication,
     apiFetchCustomerLoans,
