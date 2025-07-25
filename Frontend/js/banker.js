@@ -1,296 +1,271 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    let currentBankerUser = verifyAuthenticationAndRedirect();
-    if (!currentBankerUser || currentBankerUser.role !== 'banker' || !currentBankerUser.isApproved) {
-        clearUserSession();
+// Updated utils.js
+const BASE_API_URL = 'http://localhost:5000/api'; // Consider making this configurable for different environments
+
+const getSessionData = (key) => {
+    try {
+        const data = sessionStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+    } catch (error) {
+        console.error(`Failed to retrieve "${key}" from session storage:`, error);
+        return null;
+    }
+};
+
+const setSessionData = (key, value) => {
+    try {
+        sessionStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+        console.error(`Failed to save "${key}" to session storage:`, error);
+    }
+};
+
+const clearUserSession = () => {
+    sessionStorage.removeItem('loggedInUser');
+    sessionStorage.removeItem('jwtToken');
+};
+
+const getCurrentLoggedInUser = () => {
+    return getSessionData('loggedInUser');
+};
+
+const getAuthToken = () => {
+    return sessionStorage.getItem('jwtToken');
+};
+
+const navigateToDashboard = (userRole) => {
+    switch (userRole) {
+        case 'customer':
+            window.location.href = 'customer.html';
+            break;
+        case 'banker':
+            window.location.href = 'banker.html';
+            break;
+        case 'admin':
+            window.location.href = 'admin.html';
+            break;
+        default:
+            window.location.href = 'login.html';
+    }
+};
+
+const verifyAuthenticationAndRedirect = () => {
+    const user = getCurrentLoggedInUser();
+    if (!user || !getAuthToken()) {
+        alert('Access denied: Please log in to view this page.');
         window.location.href = 'login.html';
-        return;
+        return null;
+    }
+    return user;
+};
+
+// This function could be removed if calculation is solely backend driven
+const calculateLoanMonthlyPayment = (principalAmount, annualInterestRate, loanTermInMonths) => {
+    const monthlyInterestRate = annualInterestRate / 12 / 100;
+    if (monthlyInterestRate === 0) {
+        return principalAmount / loanTermInMonths;
+    }
+    const divisor = 1 - Math.pow(1 + monthlyInterestRate, -loanTermInMonths);
+    if (divisor === 0) {
+        return 0;
+    }
+    return principalAmount * (monthlyInterestRate / divisor);
+};
+
+const makeApiRequest = async (endpoint, method = 'GET', data = null, requiresAuth = true) => {
+    const requestOptions = {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    if (requiresAuth) {
+        const token = getAuthToken();
+        if (!token) {
+            clearUserSession();
+            navigateToDashboard('login');
+            throw new Error('Authentication token missing. Please log in again.');
+        }
+        requestOptions.headers['Authorization'] = `Bearer ${token}`;
     }
 
-    document.getElementById('userName').textContent = `Hello, Banker ${currentBankerUser.name}!`;
+    if (data) {
+        requestOptions.body = JSON.stringify(data);
+    }
 
-    const sidebarContainer = document.getElementById('sidebar-wrapper');
-    const menuToggleButton = document.getElementById('menu-toggle');
-    const dashboardContentSections = document.querySelectorAll('.dashboard-content');
-    const navigationLinks = document.querySelectorAll('.list-group-item-action');
-
-    const loanRequestsDisplay = document.querySelector('#loan-requests-content #loanRequestsList tbody');
-    const customerLoansDisplay = document.querySelector('#manage-loans-content #customerLoanList tbody');
-
-    const totalCustomersCounter = document.getElementById('totalCustomersCount');
-    const pendingRequestsCounter = document.getElementById('pendingRequestsCount');
-    const bankerWalletBalanceDisplay = document.getElementById('bankerWalletBalance');
-
-    const totalLoansIssuedElement = document.getElementById('totalLoansIssued');
-    const totalActiveLoanValueElement = document.getElementById('totalActiveLoanValue');
-    const totalCompletedLoansElement = document.getElementById('totalCompletedLoans');
-
-    const updateUserProfileInformation = () => {
-        document.getElementById('displayBankerName').textContent = currentBankerUser.name;
-        document.getElementById('displayEmail').textContent = currentBankerUser.email;
-        document.getElementById('displayPhone').textContent = currentBankerUser.phone;
-        document.getElementById('displayRole').textContent = currentBankerUser.role.charAt(0).toUpperCase() + currentBankerUser.role.slice(1);
-        document.getElementById('displayBankerId').textContent = currentBankerUser.bankerId || 'N/A';
-        const approvalStatusBadge = document.getElementById('displayApprovalStatus');
-        approvalStatusBadge.textContent = currentBankerUser.isApproved ? 'Approved' : 'Pending';
-        approvalStatusBadge.classList.add(currentBankerUser.isApproved ? 'bg-success' : 'bg-warning');
-        document.getElementById('displayWalletBalance').textContent = `$${(currentBankerUser.walletBalance || 0).toFixed(2)}`;
-        bankerWalletBalanceDisplay.textContent = `$${(currentBankerUser.walletBalance || 0).toFixed(2)}`;
-    };
-
-    menuToggleButton.addEventListener('click', () => {
-        sidebarContainer.classList.toggle('toggled');
-        document.getElementById('page-content-wrapper').classList.toggle('toggled');
-    });
-
-    navigationLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const targetContentId = this.dataset.target;
-
-            navigationLinks.forEach(item => item.classList.remove('active'));
-            this.classList.add('active');
-
-            dashboardContentSections.forEach(content => {
-                content.classList.remove('active-content');
-            });
-            document.getElementById(targetContentId).classList.add('active-content');
-            updateVisibleDashboardContent(targetContentId);
-        });
-    });
-
-    const updateVisibleDashboardContent = async (contentId) => {
-        try {
-            const usersResponse = await apiFetchAllUsers();
-            if (usersResponse.success) {
-                currentBankerUser = usersResponse.users.find(user => user.id === currentBankerUser.id);
-                setSessionData('loggedInUser', currentBankerUser);
-                updateUserProfileInformation();
-            } else {
-                alert('Failed to refresh user data: ' + usersResponse.message);
-            }
-        } catch (error) {
-            alert('Error accessing latest user data: ' + error.message);
+    try {
+        const response = await fetch(`${BASE_API_URL}/${endpoint}`, requestOptions);
+        
+        if (response.status === 401) {
+            clearUserSession();
+            alert('Your session has expired or is invalid. Please log in again.');
+            navigateToDashboard('login');
+            throw new Error('Unauthorized access, session expired.');
         }
 
-        switch (contentId) {
-            case 'overview-content':
-                await refreshDashboardAnalytics();
-                break;
-            case 'loan-requests-content':
-                await displayLoanRequestsForBanker();
-                break;
-            case 'manage-loans-content':
-                await displayCustomerLoanDetailsForBanker();
-                break;
+        if (!response.ok) {
+            const errorDetails = await response.json();
+            throw new Error(errorDetails.message || `API call failed: ${response.status} ${response.statusText}`);
         }
-    };
+        return await response.json();
+    } catch (error) {
+        console.error("API Request Failed:", error);
+        throw error;
+    }
+};
 
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-        clearUserSession();
-        alert('You have been logged out.');
-        window.location.href = 'login.html';
-    });
+const apiRegisterNewUser = async (userData) => {
+    try {
+        const response = await makeApiRequest('auth/register', 'POST', userData, false);
+        return { success: true, user: response.user, token: response.token };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
 
-    const displayLoanRequestsForBanker = async () => {
-        loanRequestsDisplay.innerHTML = '';
-        try {
-            const response = await apiFetchPendingLoanRequests();
+const apiLoginUser = async (credentials) => {
+    try {
+        const response = await makeApiRequest('auth/login', 'POST', credentials, false);
+        return { success: true, user: response.user, token: response.token };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
 
-            if (!response.success) {
-                alert('Error fetching loan requests for banker: ' + response.message);
-                return;
+const apiFetchAllUsers = async () => {
+    try {
+        const users = await makeApiRequest('users');
+        return { success: true, users: users };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
+
+const apiUpdateExistingUser = async (userId, updateData) => {
+    try {
+        const response = await makeApiRequest(`users/${userId}`, 'PUT', updateData);
+        return { success: true, user: response.user };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
+
+const apiDeleteUserById = async (userId) => {
+    try {
+        await makeApiRequest(`users/${userId}`, 'DELETE');
+        return { success: true, message: 'User successfully removed.' };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
+
+const apiSubmitNewLoanRequest = async (requestDetails) => {
+    try {
+        const response = await makeApiRequest('loan-requests', 'POST', requestDetails);
+        return { success: true, message: response.message, requestId: response.requestId };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
+
+const apiFetchPendingLoanRequests = async () => {
+    // This endpoint is for bankers/admins to get ALL pending requests
+    try {
+        const requests = await makeApiRequest('loan-requests');
+        return { success: true, requests: requests };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
+
+const apiFetchCustomerPendingLoanRequests = async () => {
+    try {
+        const requests = await makeApiRequest('loan-requests/customer-pending');
+        return { success: true, requests: requests };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
+
+
+const apiFetchAllLoanRequests = async () => {
+    try {
+        const requests = await makeApiRequest('loan-requests/all');
+        return { success: true, requests: requests };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
+
+// MODIFIED: Added processingBankerId to the data payload
+const apiProcessLoanApplication = async (requestId, approvedStatus, proposedInterestRate = null, processingBankerId) => {
+    try {
+        const response = await makeApiRequest(
+            `loan-requests/${requestId}/process`,
+            'PUT',
+            {
+                approved: approvedStatus,
+                interestRate: proposedInterestRate,
+                processedByBankerId: processingBankerId // Pass banker ID in the body
             }
+        );
+        return { success: true, message: response.message };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
 
-            const pendingRequests = response.requests;
+const apiFetchCustomerLoans = async (customerId) => {
+    try {
+        const loans = await makeApiRequest(`loans/customer/${customerId}`);
+        return { success: true, loans: loans };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
 
-            if (pendingRequests.length === 0) {
-                loanRequestsDisplay.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No pending loan requests.</td></tr>`;
-                return;
-            }
+const apiUpdateLoanStatus = async (loanId, newStatus) => {
+    try {
+        const response = await makeApiRequest(`loans/${loanId}/status`, 'PUT', { status: newStatus });
+        return { success: true, message: response.message };
+    }
+    catch (error) {
+        return { success: false, message: error.message };
+    }
+};
 
-            pendingRequests.forEach(request => {
-                const row = loanRequestsDisplay.insertRow();
-                row.innerHTML = `
-                    <td>${request.id}</td>
-                    <td>${request.customerName} (${request.customerEmail})</td>
-                    <td>$${request.amount.toFixed(2)}</td>
-                    <td>${request.termMonths} months</td>
-                    <td>${request.appliedDate}</td>
-                    <td>
-                        <button class="btn btn-sm btn-success me-2 approve-loan-request-button" data-id="${request.id}">Approve</button>
-                        <button class="btn btn-sm btn-danger reject-loan-request-button" data-id="${request.id}">Reject</button>
-                    </td>
-                `;
-            });
+const apiFetchAllLoans = async () => {
+    try {
+        const loans = await makeApiRequest('loans');
+        return { success: true, loans: loans };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+};
 
-            document.querySelectorAll('.approve-loan-request-button').forEach(button => {
-                button.addEventListener('click', async (event) => {
-                    const requestId = event.target.dataset.id;
-                    const requestDetails = pendingRequests.find(req => req.id === requestId);
-
-                    if (!requestDetails) return;
-
-                    const interestRateInput = prompt(`Approve loan for $${requestDetails.amount.toFixed(2)} (Term: ${requestDetails.termMonths} months). Enter interest rate (%):`, '8.5');
-                    const interestRate = parseFloat(interestRateInput);
-
-                    if (isNaN(interestRate) || interestRate < 0) {
-                        alert('Invalid interest rate provided. Approval cancelled.');
-                        return;
-                    }
-
-                    try {
-                        const response = await apiProcessLoanApplication(requestId, true, interestRate, currentBankerUser.id);
-                        if (response.success) {
-                            alert(`Loan successfully approved and funds issued!`);
-                            await displayLoanRequestsForBanker();
-                            await displayCustomerLoanDetailsForBanker();
-                            await refreshDashboardAnalytics();
-                        } else {
-                            alert('Failed to approve loan: ' + response.message);
-                        }
-                    } catch (error) {
-                        alert('Error during loan approval: ' + error.message);
-                    }
-                });
-            });
-
-            document.querySelectorAll('.reject-loan-request-button').forEach(button => {
-                button.addEventListener('click', async (event) => {
-                    const requestId = event.target.dataset.id;
-                    if (confirm('Confirm rejection of this loan request?')) {
-                        try {
-                            const response = await apiProcessLoanApplication(requestId, false, null, currentBankerUser.id);
-                            if (response.success) {
-                                alert('Loan request successfully rejected.');
-                                await displayLoanRequestsForBanker();
-                                await refreshDashboardAnalytics();
-                            } else {
-                                alert('Failed to reject loan: ' + response.message);
-                            }
-                        } catch (error) {
-                            alert('Error during loan rejection: ' + error.message);
-                        }
-                    }
-                });
-            });
-        } catch (error) {
-            alert('Error displaying loan requests for banker: ' + error.message);
-        }
-    };
-
-    const displayCustomerLoanDetailsForBanker = async () => {
-        customerLoansDisplay.innerHTML = '';
-        try {
-            const allLoansResponse = await apiFetchAllLoans();
-            if (!allLoansResponse.success) {
-                alert('Error fetching all loans for banker: ' + allLoansResponse.message);
-                return;
-            }
-            const allSystemLoans = allLoansResponse.loans;
-
-            if (allSystemLoans.length === 0) {
-                customerLoansDisplay.innerHTML = `<tr><td colspan="9" class="text-center text-muted">No customer loans to display.</td></tr>`;
-                return;
-            }
-
-            allSystemLoans.forEach(loan => {
-                const row = customerLoansDisplay.insertRow();
-
-                let nextPaymentDueDate = loan.status === 'active' ? (loan.nextDueDate || 'N/A') : 'N/A';
-                let statusBadgeStyle = loan.status === 'active' ? 'bg-success' : 'bg-secondary';
-                if (loan.status === 'active' && new Date(loan.nextDueDate) < new Date() && loan.paymentsMade < loan.termMonths) {
-                    statusBadgeStyle = 'bg-danger';
-                    nextPaymentDueDate += ' (Overdue)';
-                }
-
-                row.innerHTML = `
-                    <td>${loan.customerName}</td>
-                    <td>${loan.customerEmail}</td>
-                    <td>${loan.id}</td>
-                    <td>$${loan.amount.toFixed(2)}</td>
-                    <td>${loan.termMonths}</td>
-                    <td>$${loan.monthlyPayment.toFixed(2)}</td>
-                    <td><span class="badge ${statusBadgeStyle}">${loan.status}</span></td>
-                    <td>${nextPaymentDueDate}</td>
-                    <td>
-                        <button class="btn btn-sm btn-danger end-loan-button" data-loan-id="${loan.id}" ${loan.status !== 'active' ? 'disabled' : ''}>End Loan</button>
-                    </td>
-                `;
-            });
-
-            document.querySelectorAll('.end-loan-button').forEach(button => {
-                button.addEventListener('click', async (event) => {
-                    const loanId = event.target.dataset.loanId;
-                    if (confirm('Confirm marking this loan as completed?')) {
-                        try {
-                            const response = await apiUpdateLoanStatus(loanId, 'completed');
-                            if (response.success) {
-                                alert('Loan successfully marked as completed.');
-                                await displayCustomerLoanDetailsForBanker();
-                                await refreshDashboardAnalytics();
-                            } else {
-                                alert('Failed to update loan status: ' + response.message);
-                            }
-                        } catch (error) {
-                            alert('Error ending loan: ' + error.message);
-                        }
-                    }
-                });
-            });
-        } catch (error) {
-            alert('Error displaying customer loan details for banker: ' + error.message);
-        }
-    };
-
-    const refreshDashboardAnalytics = async () => {
-        try {
-            const usersResponse = await apiFetchAllUsers();
-            const loanRequestsResponse = await apiFetchPendingLoanRequests();
-            const allLoansResponse = await apiFetchAllLoans();
-
-            if (!usersResponse.success || !loanRequestsResponse.success || !allLoansResponse.success) {
-                alert('Failed to retrieve essential analytics data.');
-                return;
-            }
-
-            const allSystemUsers = usersResponse.users;
-            const allPendingRequests = loanRequestsResponse.requests;
-            const allSystemLoans = allLoansResponse.loans;
-
-            const approvedCustomerCount = allSystemUsers.filter(user => user.role === 'customer' && user.isApproved).length;
-            const currentPendingRequestsCount = allPendingRequests.length;
-            currentBankerUser = allSystemUsers.find(user => user.id === currentBankerUser.id);
-            const currentBankerWalletBalance = currentBankerUser ? (currentBankerUser.walletBalance || 0) : 0;
-
-            let totalIssuedLoans = 0;
-            let totalActiveLoanValue = 0;
-            let totalCompletedLoans = 0;
-
-            allSystemLoans.forEach(loan => {
-                if (loan.issuedByBankerId === currentBankerUser.id) {
-                    totalIssuedLoans++;
-                    if (loan.status === 'active') {
-                        totalActiveLoanValue += loan.amount;
-                    } else if (loan.status === 'completed') {
-                        totalCompletedLoans++;
-                    }
-                }
-            });
-
-            totalCustomersCounter.textContent = approvedCustomerCount;
-            pendingRequestsCounter.textContent = currentPendingRequestsCount;
-            bankerWalletBalanceDisplay.textContent = `$${currentBankerWalletBalance.toFixed(2)}`;
-            totalLoansIssuedElement.textContent = totalIssuedLoans;
-            totalActiveLoanValueElement.textContent = `$${totalActiveLoanValue.toFixed(2)}`;
-            totalCompletedLoansElement.textContent = totalCompletedLoans;
-
-        } catch (error) {
-            alert('Error updating dashboard analytics: ' + error.message);
-        }
-    };
-
-    refreshDashboardAnalytics();
-    displayLoanRequestsForBanker();
-    displayCustomerLoanDetailsForBanker();
-    updateUserProfileInformation();
-});
+// Export all functions
+module.exports = {
+    BASE_API_URL,
+    getSessionData,
+    setSessionData,
+    clearUserSession,
+    getCurrentLoggedInUser,
+    getAuthToken,
+    navigateToDashboard,
+    verifyAuthenticationAndRedirect,
+    calculateLoanMonthlyPayment,
+    makeApiRequest,
+    apiRegisterNewUser,
+    apiLoginUser,
+    apiFetchAllUsers,
+    apiUpdateExistingUser,
+    apiDeleteUserById,
+    apiSubmitNewLoanRequest,
+    apiFetchPendingLoanRequests,
+    apiFetchCustomerPendingLoanRequests,
+    apiFetchAllLoanRequests,
+    apiProcessLoanApplication,
+    apiFetchCustomerLoans,
+    apiUpdateLoanStatus,
+    apiFetchAllLoans
+};
