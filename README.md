@@ -1,289 +1,556 @@
 # 🏦 Lendify - Modern Loan Management Platform
 
-<div align="center">
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![Frontend](https://img.shields.io/badge/Frontend-Live-blue.svg)](https://lendifyy.netlify.app/)
+[![API](https://img.shields.io/badge/API-Live-green.svg)](https://lendify-sxky.onrender.com/api)
 
-![Lendify Logo](https://img.shields.io/badge/Lendify-Loan%20Management-blue?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K)
-
-**A comprehensive full-stack loan management system built with modern web technologies**
-
-[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
-[![MySQL](https://img.shields.io/badge/MySQL-00000F?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=flat-square&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-
-</div>
-
----
+A comprehensive full-stack loan management system built with modern web technologies, designed to streamline financial workflows, enhance security, and provide comprehensive analytics.
 
 ## 🌟 Overview
 
-**Lendify** is a modern, full-stack loan management platform that revolutionizes the lending process. Built to streamline financial workflows, enhance security, and provide comprehensive analytics, Lendify serves three distinct user roles with tailored experiences for optimal efficiency.
+Lendify revolutionizes the lending process by providing a modern, scalable platform that serves three distinct user roles with tailored experiences. The system offers enterprise-grade security, real-time analytics, and automated workflows to simplify the entire lending ecosystem.
 
-### 🎯 Why Lendify?
+## 🎯 Key Benefits
 
-Managing loans shouldn't be complicated. Lendify simplifies the entire lending ecosystem by providing:
-
-- **🎨 Intuitive User Experience** - Clean, responsive interfaces for all user types
-- **🔒 Enterprise-Grade Security** - JWT authentication and bcrypt password hashing
-- **📊 Real-time Analytics** - Comprehensive insights and reporting capabilities
+- **🎨 Intuitive User Experience** - Clean, responsive interfaces optimized for all device types
+- **🔒 Enterprise-Grade Security** - JWT authentication with bcrypt password hashing
+- **📊 Real-time Analytics** - Comprehensive insights and reporting dashboards
 - **⚡ Modern Architecture** - Built with scalable, maintainable technologies
 - **🔄 Automated Workflows** - Streamlined approval processes and fund management
-
----
+- **☁️ Cloud-Ready** - Flexible deployment options for production environments
 
 ## ✨ Features & Capabilities
 
-### 👤 **Customer Portal**
-- **📝 Easy Loan Applications** - Streamlined form with amount and term selection
-- **📊 Personalized Dashboard** - Real-time account balance, active loans, and request status
+### 👤 Customer Portal
+- **📝 Easy Loan Applications** - Streamlined application process with amount and term selection
+- **📊 Personalized Dashboard** - Real-time account balance, active loans, and application status
 - **📈 Loan Tracking** - Complete loan history with detailed status updates
-- **💳 Payment Schedules** - Clear breakdown of monthly payments, principal, and interest
+- **💳 Payment Schedules** - Clear breakdown of monthly payments, principal, and interest calculations
 
-### 🏛️ **Banker Interface**
+### 🏛️ Banker Interface
 - **📋 Request Management** - Centralized view of all pending loan applications
-- **✅ Approval Workflow** - Process loans with custom interest rate setting
+- **✅ Approval Workflow** - Streamlined loan processing with custom interest rate configuration
 - **💰 Automated Fund Transfer** - Seamless wallet-to-customer account transfers
 - **🎯 Portfolio Management** - Comprehensive loan oversight and completion tracking
-- **👛 Wallet Management** - Real-time operational balance monitoring
+- **👛 Wallet Management** - Real-time operational balance monitoring and reporting
 
-### 🔧 **Admin Control Panel**
-- **👥 User Management** - Complete oversight of customers and bankers
+### 🔧 Admin Control Panel
+- **👥 User Management** - Complete oversight of customers and bankers with role management
 - **📊 System Analytics** - Platform-wide insights and performance metrics
 - **✅ Banker Approvals** - Secure banker registration approval process
-- **📈 Comprehensive Reporting** - Total users, active loans, and system health
-
----
+- **📈 Comprehensive Reporting** - Total users, active loans, and system health monitoring
 
 ## 🛠️ Technology Stack
 
-### **Frontend Architecture**
+### Frontend Architecture
 ```
 Frontend/
-├── assets/           # Static resources
+├── assets/           # Static resources and images
 │   ├── auto-loans.jpg
 │   ├── business-loans.jpg
 │   ├── home-loans.jpg
 │   └── why-choose.jpg
 ├── css/
-│   └── style.css     # Custom styling
-├── js/               # Client-side logic
+│   └── style.css     # Custom styling and themes
+├── js/               # Client-side application logic
 │   ├── admin.js      # Admin panel functionality
 │   ├── banker.js     # Banker dashboard logic
 │   ├── customer.js   # Customer portal features
 │   ├── login.js      # Authentication handling
-│   ├── register.js   # User registration
-│   └── utils.js      # Shared utilities
-└── *.html           # Application pages
+│   ├── register.js   # User registration workflows
+│   └── utils.js      # Shared utilities and API calls
+└── *.html           # Application pages and templates
 ```
 
 | Technology | Purpose | Version |
 |------------|---------|---------|
-| **HTML5 & CSS3** | Structure & Styling | Latest |
-| **Bootstrap** | Responsive UI Framework | 5.3.3 |
-| **JavaScript ES6+** | Interactive Frontend Logic | Latest |
-| **Font Awesome** | Icon Library | Latest |
+| HTML5 & CSS3 | Structure & Styling | Latest |
+| Bootstrap | Responsive UI Framework | 5.3.3 |
+| JavaScript ES6+ | Interactive Frontend Logic | Latest |
+| Font Awesome | Icon Library | Latest |
 
-### **Backend Architecture**
+### Backend Architecture
+
+Lendify provides two distinct backend implementations for flexible deployment options:
+
 ```
-Backend/
-├── middleware/
-│   └── auth.js       # JWT authentication middleware
-├── routes/           # API endpoints
-│   ├── auth.js       # Authentication routes
-│   ├── loanRequests.js # Loan request handling
-│   ├── loans.js      # Loan management
-│   └── users.js      # User operations
-├── utils/
-│   └── helpers.js    # Utility functions
-├── db.js            # Database configuration
-├── schema.sql       # Database schema
-└── server.js        # Application entry point
+.
+├── Backend-MySQL/                # Local MySQL implementation
+│   ├── middleware/               # Authentication & validation middleware
+│   ├── routes/                   # API route handlers
+│   ├── utils/                    # Helper functions and utilities  
+│   ├── db.js                     # MySQL database connection
+│   ├── schema.sql                # MySQL database schema
+│   ├── server.js                 # Express server configuration
+│   ├── .env                      # Environment variables
+│   └── package.json              # Dependencies and scripts
+├── Backend-PostgreSQL-Cloud/     # Cloud PostgreSQL implementation  
+│   ├── middleware/               # Authentication & validation middleware
+│   ├── routes/                   # API route handlers
+│   ├── utils/                    # Helper functions and utilities
+│   ├── db.js                     # PostgreSQL database connection
+│   ├── schema.sql                # PostgreSQL database schema
+│   ├── server.js                 # Express server configuration
+│   ├── .env                      # Environment variables
+│   └── package.json              # Dependencies and scripts
+└── Frontend/                     # Static frontend application
 ```
 
-| Technology | Purpose | Benefits |
-|------------|---------|----------|
-| **Node.js** | Runtime Environment | High performance, scalable |
-| **Express.js** | Web Framework | Fast, minimalist, flexible |
-| **MySQL2** | Database Driver | Promise-based, efficient |
-| **JWT** | Authentication | Stateless, secure |
-| **bcryptjs** | Password Hashing | Industry-standard security |
-| **UUID** | Unique Identifiers | Collision-resistant |
+| Technology | Purpose | Benefits | Database Support |
+|------------|---------|----------|------------------|
+| Node.js | Runtime Environment | High performance, scalable | Both |
+| Express.js | Web Framework | Fast, minimalist, flexible | Both |
+| PostgreSQL | Cloud Database | Robust, reliable, cloud-friendly | PostgreSQL |
+| MySQL | Local Database | Widely used, performant | MySQL |
+| JWT | Authentication | Stateless, secure tokens | Both |
+| bcryptjs | Password Hashing | Industry-standard security | Both |
+| UUID | Unique Identifiers | Collision-resistant IDs | Both |
+| CORS | Cross-Origin Requests | Secure frontend-backend communication | Both |
 
----
+## ☁️ Deployment Architecture
+
+### Production Environment
+- **Frontend Deployment**: Netlify with continuous deployment and global CDN
+- **Backend Deployment**: Render.com with managed PostgreSQL database
+- **Database**: Fully managed PostgreSQL service with automated backups
+
+### Benefits of Cloud Deployment
+- **Scalability**: Automatic scaling based on demand
+- **Reliability**: High availability with 99.9% uptime SLA
+- **Security**: Enterprise-grade security with managed updates
+- **Accessibility**: Global reach with CDN distribution
 
 ## 🗄️ Database Schema
 
-### **Core Tables Structure**
+### Core Tables Structure
 
 ```sql
+-- Users table (supports all user roles)
 users
-├── id (Primary Key)
-├── name, email, phone
-├── role (customer/banker/admin)
-├── approval_status
-├── account_balance/wallet_balance
-└── account_number
+├── id (Primary Key, UUID)
+├── name (VARCHAR, user's full name)
+├── email (VARCHAR, unique identifier)
+├── phone (VARCHAR, contact information)
+├── password_hash (VARCHAR, bcrypt hashed password)
+├── role (ENUM: customer/banker/admin)
+├── is_approved (BOOLEAN, for banker approval workflow)
+├── account_balance (DECIMAL, for customer accounts)
+├── wallet_balance (DECIMAL, for banker operations)
+├── account_number (VARCHAR, unique customer identifier)
+├── created_at (TIMESTAMP)
+└── updated_at (TIMESTAMP)
 
+-- Loan requests table (application tracking)
 loan_requests
-├── id (Primary Key)
-├── customer_id (Foreign Key)
-├── amount, term_months
-├── status (pending/approved/rejected)
-└── created_at
+├── id (Primary Key, UUID)
+├── customer_id (Foreign Key → users.id)
+├── customer_name (VARCHAR, cached for performance)
+├── customer_email (VARCHAR, cached for performance)
+├── amount (DECIMAL, requested loan amount)
+├── term_months (INTEGER, loan duration)
+├── status (ENUM: pending/approved/rejected)
+├── applied_date (DATE, application submission)
+├── processed_date (DATE, approval/rejection date)
+├── processed_by_banker_id (Foreign Key → users.id)
+├── rejection_reason (TEXT, optional)
+├── created_at (TIMESTAMP)
+└── updated_at (TIMESTAMP)
 
+-- Active loans table (approved and disbursed loans)
 loans
-├── id (Primary Key)
-├── customer_id, banker_id (Foreign Keys)
-├── principal, interest_rate
-├── monthly_payment, status
-└── loan_details
+├── id (Primary Key, UUID)
+├── customer_id (Foreign Key → users.id)
+├── loan_request_id (Foreign Key → loan_requests.id)
+├── amount (DECIMAL, approved loan amount)
+├── interest_rate (DECIMAL, annual percentage rate)
+├── term_months (INTEGER, loan duration)
+├── monthly_payment (DECIMAL, calculated payment amount)
+├── status (ENUM: active/completed/defaulted)
+├── start_date (DATE, loan disbursement date)
+├── end_date (DATE, expected completion date)
+├── payments_made (INTEGER, number of payments received)
+├── total_paid (DECIMAL, cumulative payment amount)
+├── outstanding_balance (DECIMAL, remaining amount)
+├── last_payment_date (DATE, most recent payment)
+├── next_due_date (DATE, upcoming payment deadline)
+├── issued_by_banker_id (Foreign Key → users.id)
+├── created_at (TIMESTAMP)
+└── updated_at (TIMESTAMP)
 ```
-
----
 
 ## 🚀 Quick Start Guide
 
-### **Prerequisites**
-- Node.js (LTS version)
-- MySQL Server
-- Code Editor (VS Code recommended)
+### Prerequisites
+- **Node.js** (v18+ LTS recommended)
+- **Git** for version control
+- **Code Editor** (VS Code recommended)
+- **MySQL Server** (for local MySQL backend option)
 
-### **Installation Steps**
+### Installation Steps
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/mohan13krishna/lendify.git
-   cd lendify
-   ```
+#### 1. Clone the Repository
+```bash
+git clone https://github.com/mohan13krishna/lendify.git
+cd lendify
+```
 
-2. **Backend Setup**
-   ```bash
-   cd Backend
-   npm install
-   ```
+#### 2. Choose Your Backend Implementation
 
-3. **Environment Configuration**
-   Create `.env` file in Backend directory:
-   ```env
-   DB_HOST=localhost
-   DB_USER=root
-   DB_PASSWORD=YourMySQLPassword
-   DB_NAME=LENDIFY
-   DB_PORT=3306
-   
-   JWT_SECRET=your_super_secure_jwt_secret_key_here
-   PORT=5000
-   ```
+##### Option A: Local MySQL Backend
+```bash
+# Navigate to MySQL backend
+cd Backend-MySQL
 
-4. **Database Setup**
-   ```bash
-   # Import schema.sql to your MySQL database
-   mysql -u root -p LENDIFY < schema.sql
-   ```
+# Install dependencies
+npm install
 
-5. **Start the Application**
-   ```bash
-   npm start
-   ```
+# Create environment configuration
+cp .env.example .env
+```
 
-6. **Access the Application**
-   Open `Frontend/index.html` in your browser
+**Environment Configuration (.env):**
+```env
+# Database Configuration
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=lendify_mysql
+DB_PORT=3306
 
----
+# Security Configuration
+JWT_SECRET=your_super_secure_jwt_secret_key_here
+JWT_EXPIRES_IN=24h
 
-## 👥 Default Login Credentials
+# Server Configuration
+PORT=5000
+NODE_ENV=development
 
-### **Admin Access**
+# CORS Configuration
+FRONTEND_URL=http://localhost:3000
+```
+
+**Database Setup:**
+```bash
+# Create database
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS lendify_mysql;"
+
+# Import schema
+mysql -u root -p lendify_mysql < schema.sql
+
+# Start the server
+npm start
+```
+
+##### Option B: Cloud PostgreSQL Backend
+```bash
+# Navigate to PostgreSQL backend
+cd Backend-PostgreSQL-Cloud
+
+# Install dependencies
+npm install
+
+# Create environment configuration
+cp .env.example .env
+```
+
+**Environment Configuration (.env):**
+```env
+# Cloud Database Configuration
+DATABASE_URL=postgresql://username:password@host:port/database
+DB_HOST=your_render_db_host
+DB_USER=your_render_db_user
+DB_PASSWORD=your_render_db_password
+DB_NAME=your_render_db_name
+DB_PORT=5432
+
+# Security Configuration
+JWT_SECRET=your_super_secure_jwt_secret_key_here
+JWT_EXPIRES_IN=24h
+
+# Server Configuration
+PORT=5000
+NODE_ENV=production
+
+# CORS Configuration
+FRONTEND_URL=https://lendifyy.netlify.app
+```
+
+**Start the Server:**
+```bash
+npm start
+```
+
+#### 3. Configure Frontend
+
+**Update API Configuration:**
+```javascript
+// Frontend/js/utils.js
+const BASE_API_URL = 'http://localhost:5000/api'; // Local development
+// OR
+const BASE_API_URL = 'https://lendify-sxky.onrender.com/api'; // Production
+```
+
+#### 4. Launch the Application
+
+Open `Frontend/index.html` in your web browser or serve it using a local server:
+
+```bash
+# Using Python (if installed)
+cd Frontend
+python -m http.server 3000
+
+# Using Node.js serve (install globally first)
+npm install -g serve
+serve Frontend -p 3000
+```
+
+## 🌐 Live Demos
+
+**Frontend Application:** [https://lendifyy.netlify.app/](https://lendifyy.netlify.app/)
+
+**Backend API:** [https://lendify-sxky.onrender.com/api](https://lendify-sxky.onrender.com/api)
+
+## 👥 Default Credentials
+
+### Admin Access
 - **Email:** `admin@loans.com`
 - **Password:** `adminpassword`
 
-> 🔒 **Security Note:** Change default credentials in production environment
+### Demo Banker (if pre-seeded)
+- **Email:** `banker@loans.com`
+- **Password:** `bankerpassword`
 
----
+### Demo Customer (if pre-seeded)
+- **Email:** `customer@loans.com`
+- **Password:** `customerpassword`
+
+> **🔒 Security Note:** Always change default credentials in production environments
 
 ## 🎮 User Journey
 
-### **For Customers**
-1. **Register** → Create account as Customer
-2. **Login** → Access personal dashboard immediately
-3. **Apply** → Submit loan applications with desired terms
-4. **Track** → Monitor application status and active loans
+### For Customers
+1. **Register** → Create customer account with personal details
+2. **Login** → Access personalized dashboard immediately
+3. **Apply** → Submit loan applications with desired amount and terms
+4. **Track** → Monitor application status and loan progress
 5. **Manage** → View payment schedules and account balance
 
-### **For Bankers**
-1. **Register** → Create account as Banker
-2. **Wait for Approval** → Admin approval required
+### For Bankers
+1. **Register** → Create banker account (requires admin approval)
+2. **Wait for Approval** → Admin review and approval process
 3. **Login** → Access banker portal after approval
 4. **Review** → Process pending loan applications
-5. **Manage** → Oversee loan portfolio and wallet
+5. **Manage** → Oversee loan portfolio and wallet balance
 
-### **For Admins**
+### For Admins
 1. **Login** → Use provided admin credentials
 2. **Approve** → Review and approve banker applications
-3. **Monitor** → Track system-wide analytics
-4. **Manage** → Oversee all platform operations
+3. **Monitor** → Track system-wide analytics and metrics
+4. **Manage** → Oversee all platform operations and users
 
----
+## 📊 Analytics & Reporting
 
-## 📊 Key Metrics & Analytics
+### Real-time Dashboards
+- **Loan Statistics** - Application success rates, approval times
+- **User Growth** - Registration trends across all user roles
+- **Financial Metrics** - Total loans disbursed, outstanding amounts
+- **System Health** - API response times, error rates
 
-- **Real-time Dashboard** with loan statistics
-- **User Growth Tracking** across all roles
-- **Loan Performance Metrics** and success rates
-- **Financial Flow Analysis** and reporting
-- **System Health Monitoring** and alerts
-
----
+### Key Performance Indicators
+- Monthly recurring revenue (MRR)
+- Customer acquisition cost (CAC)
+- Loan default rates
+- Average processing time
+- User engagement metrics
 
 ## 🔒 Security Features
 
-- **JWT-based Authentication** for stateless security
-- **Password Hashing** with bcrypt for data protection
-- **Role-based Access Control** for feature restrictions
-- **Input Validation** and sanitization
-- **CORS Configuration** for secure cross-origin requests
+### Authentication & Authorization
+- **JWT-based Authentication** - Stateless, scalable security model
+- **Role-based Access Control** - Granular permission management
+- **Password Security** - bcrypt hashing with salt rounds
+- **Session Management** - Secure token refresh mechanisms
 
----
+### Data Protection
+- **Input Validation** - Comprehensive request sanitization
+- **SQL Injection Prevention** - Parameterized queries and ORM usage
+- **XSS Protection** - Content Security Policy headers
+- **CORS Configuration** - Controlled cross-origin access
+
+### Infrastructure Security
+- **HTTPS Enforcement** - TLS 1.3 encryption in production
+- **Environment Variables** - Secure configuration management
+- **Database Security** - Connection encryption and access controls
+- **Rate Limiting** - API abuse prevention
+
+## 🧪 Testing
+
+### Running Tests
+```bash
+# Backend tests
+cd Backend-MySQL  # or Backend-PostgreSQL-Cloud
+npm test
+
+# Frontend tests (if implemented)
+cd Frontend
+npm test
+```
+
+### Test Coverage
+- Unit tests for API endpoints
+- Integration tests for database operations
+- Authentication flow testing
+- Role-based access testing
+
+## 📈 Performance Optimization
+
+### Backend Optimizations
+- Database query optimization with indexes
+- Connection pooling for database efficiency
+- Caching strategies for frequently accessed data
+- Async/await patterns for non-blocking operations
+
+### Frontend Optimizations
+- Lazy loading for improved initial load times
+- Image optimization and compression
+- Minification of CSS and JavaScript
+- CDN usage for static assets
+
+## 🚀 Deployment Guide
+
+### Production Deployment Checklist
+
+#### Environment Setup
+- [ ] Configure production environment variables
+- [ ] Set up SSL certificates
+- [ ] Configure domain names and DNS
+- [ ] Set up monitoring and logging
+
+#### Database Setup
+- [ ] Create production database
+- [ ] Run database migrations
+- [ ] Set up automated backups
+- [ ] Configure connection pooling
+
+#### Security Configuration
+- [ ] Change default passwords
+- [ ] Configure CORS for production domains
+- [ ] Set up rate limiting
+- [ ] Enable security headers
+
+#### Monitoring Setup
+- [ ] Set up application monitoring
+- [ ] Configure error tracking
+- [ ] Set up performance monitoring
+- [ ] Configure alerting
+
+### Scaling Considerations
+- **Horizontal Scaling** - Load balancer configuration
+- **Database Scaling** - Read replicas and connection pooling
+- **Caching Layer** - Redis for session and data caching
+- **CDN Integration** - Global content distribution
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
+We welcome contributions from the community! Please follow these guidelines:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### Development Workflow
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
----
+### Code Standards
+- Follow ESLint configuration for JavaScript
+- Use meaningful commit messages
+- Add tests for new features
+- Update documentation as needed
+
+### Pull Request Guidelines
+- Provide clear description of changes
+- Include screenshots for UI changes
+- Ensure all tests pass
+- Request review from maintainers
+
+## 📋 Troubleshooting
+
+### Common Issues
+
+#### Database Connection Issues
+```bash
+# Check database service status
+systemctl status mysql  # For MySQL
+systemctl status postgresql  # For PostgreSQL
+
+# Test connection
+mysql -u username -p  # For MySQL
+psql -h host -U username -d database  # For PostgreSQL
+```
+
+#### Environment Variable Issues
+```bash
+# Verify environment variables are loaded
+node -e "console.log(process.env.DB_HOST)"
+
+# Check .env file syntax
+cat .env | grep -v '^#' | grep -v '^$'
+```
+
+#### CORS Issues
+```javascript
+// Update CORS configuration in server.js
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://yourdomain.com'],
+  credentials: true
+};
+```
+
+### Performance Issues
+- Check database query performance with `EXPLAIN`
+- Monitor API response times
+- Review server resource usage
+- Optimize database indexes
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
----
-
 ## 📞 Support & Contact
 
-- **Issues:** [GitHub Issues](https://github.com/yourusername/lendify/issues)
-- **Documentation:** [Wiki](https://github.com/yourusername/lendify/wiki)
+- **Documentation:** [Project Wiki](https://github.com/mohan13krishna/lendify/wiki)
+- **Issues:** [GitHub Issues](https://github.com/mohan13krishna/lendify/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/mohan13krishna/lendify/discussions)
 - **Email:** support@lendify.com
-
----
 
 ## 🙏 Acknowledgments
 
-- Built with passion for financial technology
-- Inspired by modern banking solutions
-- Thanks to the open-source community for excellent tools
+- Thanks to all contributors who have helped improve Lendify
+- Special thanks to the open-source community for the amazing tools and libraries
+- Bootstrap team for the responsive UI framework
+- Node.js and Express.js communities for the robust backend foundation
 
 ---
 
-<div align="center">
+**Made with ❤️ by the Lendify Team**
 
-**Made with ❤️ by [Your Name]**
+⭐ **Star this repository if you found it helpful!**
 
-⭐ Star this repository if you found it helpful!
+---
 
-</div>
+### 📊 Project Stats
+
+![GitHub stars](https://img.shields.io/github/stars/mohan13krishna/lendify?style=social)
+![GitHub forks](https://img.shields.io/github/forks/mohan13krishna/lendify?style=social)
+![GitHub issues](https://img.shields.io/github/issues/mohan13krishna/lendify)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/mohan13krishna/lendify)
+
+### 🏆 Project Highlights
+
+- ✅ **Production Ready** - Deployed and running in live environment
+- ✅ **Scalable Architecture** - Built for growth and expansion  
+- ✅ **Security First** - Enterprise-grade security implementation
+- ✅ **Modern Stack** - Latest technologies and best practices
+- ✅ **Comprehensive** - Complete loan management ecosystem
+- ✅ **Well Documented** - Extensive documentation and examples
