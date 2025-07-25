@@ -1,4 +1,3 @@
-// Updated banker.js
 document.addEventListener('DOMContentLoaded', async () => {
     let currentBankerUser = verifyAuthenticationAndRedirect();
     if (!currentBankerUser || currentBankerUser.role !== 'banker' || !currentBankerUser.isApproved) {
@@ -83,9 +82,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             case 'manage-loans-content':
                 await displayCustomerLoanDetailsForBanker();
                 break;
-            case 'profile-content': // Added for 'My Profile' to refresh user data on click
-                updateUserProfileInformation();
-                break;
         }
     };
 
@@ -143,7 +139,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
 
                     try {
-                        // MODIFIED: Pass currentBankerUser.id as the fourth argument to apiProcessLoanApplication
                         const response = await apiProcessLoanApplication(requestId, true, interestRate, currentBankerUser.id);
                         if (response.success) {
                             alert(`Loan successfully approved and funds issued!`);
@@ -164,7 +159,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const requestId = event.target.dataset.id;
                     if (confirm('Confirm rejection of this loan request?')) {
                         try {
-                            // MODIFIED: Pass currentBankerUser.id as the fourth argument to apiProcessLoanApplication
                             const response = await apiProcessLoanApplication(requestId, false, null, currentBankerUser.id);
                             if (response.success) {
                                 alert('Loan request successfully rejected.');
@@ -265,12 +259,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const approvedCustomerCount = allSystemUsers.filter(user => user.role === 'customer' && user.isApproved).length;
             const currentPendingRequestsCount = allPendingRequests.length;
-            
-            // Re-fetch the current banker user data to ensure latest wallet balance is reflected
-            const latestBankerUserData = allSystemUsers.find(user => user.id === currentBankerUser.id);
-            currentBankerUser = latestBankerUserData ? latestBankerUserData : currentBankerUser; // Update if found, else keep old
-            setSessionData('loggedInUser', currentBankerUser); // Update session storage
-            
+            currentBankerUser = allSystemUsers.find(user => user.id === currentBankerUser.id);
             const currentBankerWalletBalance = currentBankerUser ? (currentBankerUser.walletBalance || 0) : 0;
 
             let totalIssuedLoans = 0;
@@ -300,7 +289,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // Initial load functions
     refreshDashboardAnalytics();
     displayLoanRequestsForBanker();
     displayCustomerLoanDetailsForBanker();
