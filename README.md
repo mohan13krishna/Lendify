@@ -10,7 +10,7 @@ A comprehensive full-stack loan management system built with modern web technolo
 ## 🌟 Overview
 
 Lendify revolutionizes the lending process by providing a modern, scalable platform that serves three distinct user roles with tailored experiences. The system offers enterprise-grade security, real-time analytics, and automated workflows to simplify the entire lending ecosystem.
-
+ 
 ## 🎯 Key Benefits
 
 - **🎨 Intuitive User Experience** - Clean, responsive interfaces optimized for all device types
