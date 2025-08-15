@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
-[![Frontend](https://img.shields.io/badge/Frontend-Live-blue.svg)](https://lendifyy.netlify.app/)
+[![Frontend](https://img.shields.io/badge/Frontend-Live-blue.svg)](https://lendifyy.netlify.app/) 
 [![API](https://img.shields.io/badge/API-Live-green.svg)](https://lendify-sxky.onrender.com/api) 
 
 A comprehensive full-stack loan management system built with modern web technologies, designed to streamline financial workflows, enhance security, and provide comprehensive analytics.
